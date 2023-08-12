@@ -1,43 +1,5 @@
 local M = {}
 
-function M.setup()
-  require('neoconf.plugins').register {
-    name = 'neomakery',
-    on_schema = function(schema)
-      local compiler = { enum = vim.fn.getcompletion('*', 'compiler') }
-      local makeprg = { type = 'string' }
-
-      schema:set('neomakery.compilers', {
-        type = 'object',
-        additionalProperties = {
-          type = 'object',
-          anyOf = {
-            {
-              type = 'object',
-              properties = {
-                compiler = compiler,
-                makeprg = makeprg,
-              },
-              required = { 'makeprg' },
-            },
-            {
-              type = 'object',
-              properties = {
-                compiler = compiler,
-                makeprg = makeprg,
-              },
-              required = { 'compiler' },
-            },
-          },
-          properties = {
-            errorformat = { type = 'string' },
-          },
-        },
-      })
-    end,
-  }
-end
-
 function M.show_menu()
   local settings = require('neoconf').get('neomakery', {
     compilers = {},
