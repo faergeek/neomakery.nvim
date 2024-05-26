@@ -37,8 +37,15 @@ function M.show_menu()
 
     vim.o.makeprg = option.makeprg
     vim.o.errorformat = option.errorformat
-    vim.cmd.make()
-    vim.cmd.cwindow()
+
+    local commands = vim.api.nvim_get_commands { builtin = false }
+
+    if commands.Make then
+      vim.cmd.Make()
+    else
+      vim.cmd.make()
+      vim.cmd.cwindow()
+    end
   end)
 end
 
